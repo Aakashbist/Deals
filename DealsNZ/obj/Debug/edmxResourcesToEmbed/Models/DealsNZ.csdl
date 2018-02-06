@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DealsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Address">
+    <Key>
+      <PropertyRef Name="AddressId" />
+    </Key>
+    <Property Name="AddressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="City" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Street" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Stores" Relationship="Self.FK_Store_Address" FromRole="Address" ToRole="Store" />
+  </EntityType>
+  <EntityType Name="Card">
+    <Key>
+      <PropertyRef Name="CardId" />
+    </Key>
+    <Property Name="CardId" Type="Int32" Nullable="false" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="CardNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CardExpiryMonth" Type="Int32" />
+    <Property Name="CardExpiryYear" Type="Int32" />
+    <Property Name="CardHolderName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CardType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="UserProfile" Relationship="Self.FK_Card_UserProfile" FromRole="Card" ToRole="UserProfile" />
+  </EntityType>
+  <EntityType Name="Company">
+    <Key>
+      <PropertyRef Name="CompanyId" />
+    </Key>
+    <Property Name="CompanyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Stores" Relationship="Self.FK_Store_Company" FromRole="Company" ToRole="Store" />
+  </EntityType>
+  <EntityType Name="Coupon">
+    <Key>
+      <PropertyRef Name="CouponId" />
+    </Key>
+    <Property Name="CouponId" Type="Int32" Nullable="false" />
+    <Property Name="CouponUniqueText" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CouponValidTill" Type="DateTime" Precision="0" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="DealId" Type="Int32" />
+    <Property Name="AddedOn" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Deal" Relationship="Self.FK_Coupon_Deals" FromRole="Coupon" ToRole="Deals" />
+    <NavigationProperty Name="UserProfile" Relationship="Self.FK_Coupon_UserProfile" FromRole="Coupon" ToRole="UserProfile" />
+  </EntityType>
+  <EntityType Name="DealImage">
+    <Key>
+      <PropertyRef Name="DealImageId" />
+    </Key>
+    <Property Name="DealImageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DealImage1" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="DealImageDesc" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="ImageTags" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="DealId" Type="Int32" />
+    <NavigationProperty Name="Deal" Relationship="Self.FK_DealImages_Deals" FromRole="DealImages" ToRole="Deals" />
+  </EntityType>
+  <EntityType Name="Deal">
+    <Key>
+      <PropertyRef Name="DealId" />
+    </Key>
+    <Property Name="DealId" Type="Int32" Nullable="false" />
+    <Property Name="StoreId" Type="Int32" />
+    <Property Name="ValidTill" Type="DateTime" Precision="0" />
+    <Property Name="Discount" Type="Int32" />
+    <Property Name="StrikePrice" Type="Int32" />
+    <Property Name="Price" Type="Int32" />
+    <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+    <Property Name="AddedOn" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Coupons" Relationship="Self.FK_Coupon_Deals" FromRole="Deals" ToRole="Coupon" />
+    <NavigationProperty Name="DealImages" Relationship="Self.FK_DealImages_Deals" FromRole="Deals" ToRole="DealImages" />
+    <NavigationProperty Name="Store" Relationship="Self.FK_Deals_Store" FromRole="Deals" ToRole="Store" />
+  </EntityType>
+  <EntityType Name="Store">
+    <Key>
+      <PropertyRef Name="StoreId" />
+    </Key>
+    <Property Name="StoreId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StoreName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="StoreAddress" Type="Int32" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="Contact" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="IdentificationImage" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="CompanyId" Type="Int32" />
+    <NavigationProperty Name="Address" Relationship="Self.FK_Store_Address" FromRole="Store" ToRole="Address" />
+    <NavigationProperty Name="Company" Relationship="Self.FK_Store_Company" FromRole="Store" ToRole="Company" />
+    <NavigationProperty Name="Deals" Relationship="Self.FK_Deals_Store" FromRole="Store" ToRole="Deals" />
+    <NavigationProperty Name="UserProfile" Relationship="Self.FK_Store_UserProfile" FromRole="Store" ToRole="UserProfile" />
+  </EntityType>
+  <EntityType Name="Subscription">
+    <Key>
+      <PropertyRef Name="SubscriptionId" />
+    </Key>
+    <Property Name="SubscriptionId" Type="Int32" Nullable="false" />
+    <Property Name="SubscriptionTitle" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="SubscriptionDiscription" Type="Binary" MaxLength="500" FixedLength="false" />
+    <Property Name="SubscriptionPrice" Type="Int32" />
+    <Property Name="AddedOn" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="UserProfiles" Relationship="Self.FK_UserProfile_Subscription" FromRole="Subscription" ToRole="UserProfile" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="UserProfile">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Contact" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="isContactVerified" Type="Boolean" />
+    <Property Name="isLocked" Type="Boolean" />
+    <Property Name="AddedOn" Type="DateTime" Precision="0" />
+    <Property Name="UserSubscritionId" Type="Int32" />
+    <Property Name="UserPromoCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="RefferedByUser" Type="Int32" />
+    <NavigationProperty Name="Cards" Relationship="Self.FK_Card_UserProfile" FromRole="UserProfile" ToRole="Card" />
+    <NavigationProperty Name="Coupons" Relationship="Self.FK_Coupon_UserProfile" FromRole="UserProfile" ToRole="Coupon" />
+    <NavigationProperty Name="Stores" Relationship="Self.FK_Store_UserProfile" FromRole="UserProfile" ToRole="Store" />
+    <NavigationProperty Name="Subscription" Relationship="Self.FK_UserProfile_Subscription" FromRole="UserProfile" ToRole="Subscription" />
+    <NavigationProperty Name="UserSubscritions" Relationship="Self.FK_UserSubscrition_UserProfile" FromRole="UserProfile" ToRole="UserSubscrition" />
+    <NavigationProperty Name="Wallets" Relationship="Self.FK_Wallet_UserProfile" FromRole="UserProfile" ToRole="Wallet" />
+  </EntityType>
+  <EntityType Name="UserSubscrition">
+    <Key>
+      <PropertyRef Name="UserSubscriptionId" />
+    </Key>
+    <Property Name="UserSubscriptionId" Type="Int32" Nullable="false" />
+    <Property Name="UserSubscritionDate" Type="DateTime" Precision="0" />
+    <Property Name="UserSubscritionRenewalDate" Type="DateTime" Precision="0" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="SubscriptionId" Type="Int32" />
+    <NavigationProperty Name="UserProfile" Relationship="Self.FK_UserSubscrition_UserProfile" FromRole="UserSubscrition" ToRole="UserProfile" />
+  </EntityType>
+  <EntityType Name="Wallet">
+    <Key>
+      <PropertyRef Name="WalletId" />
+    </Key>
+    <Property Name="WalletId" Type="Int32" Nullable="false" />
+    <Property Name="WalletCredit" Type="Int32" />
+    <Property Name="UserId" Type="Int32" />
+    <NavigationProperty Name="UserProfile" Relationship="Self.FK_Wallet_UserProfile" FromRole="Wallet" ToRole="UserProfile" />
+  </EntityType>
+  <Association Name="FK_Store_Address">
+    <End Role="Address" Type="Self.Address" Multiplicity="0..1" />
+    <End Role="Store" Type="Self.Store" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Address">
+        <PropertyRef Name="AddressId" />
+      </Principal>
+      <Dependent Role="Store">
+        <PropertyRef Name="StoreAddress" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Card_UserProfile">
+    <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
+    <End Role="Card" Type="Self.Card" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Card">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Store_Company">
+    <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+    <End Role="Store" Type="Self.Store" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="Store">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Coupon_Deals">
+    <End Role="Deals" Type="Self.Deal" Multiplicity="0..1" />
+    <End Role="Coupon" Type="Self.Coupon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Deals">
+        <PropertyRef Name="DealId" />
+      </Principal>
+      <Dependent Role="Coupon">
+        <PropertyRef Name="DealId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Coupon_UserProfile">
+    <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
+    <End Role="Coupon" Type="Self.Coupon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Coupon">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DealImages_Deals">
+    <End Role="Deals" Type="Self.Deal" Multiplicity="0..1" />
+    <End Role="DealImages" Type="Self.DealImage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Deals">
+        <PropertyRef Name="DealId" />
+      </Principal>
+      <Dependent Role="DealImages">
+        <PropertyRef Name="DealId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Deals_Store">
+    <End Role="Store" Type="Self.Store" Multiplicity="0..1" />
+    <End Role="Deals" Type="Self.Deal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Store">
+        <PropertyRef Name="StoreId" />
+      </Principal>
+      <Dependent Role="Deals">
+        <PropertyRef Name="StoreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Store_UserProfile">
+    <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
+    <End Role="Store" Type="Self.Store" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Store">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserProfile_Subscription">
+    <End Role="Subscription" Type="Self.Subscription" Multiplicity="0..1" />
+    <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subscription">
+        <PropertyRef Name="SubscriptionId" />
+      </Principal>
+      <Dependent Role="UserProfile">
+        <PropertyRef Name="UserSubscritionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserSubscrition_UserProfile">
+    <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
+    <End Role="UserSubscrition" Type="Self.UserSubscrition" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserSubscrition">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Wallet_UserProfile">
+    <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
+    <End Role="Wallet" Type="Self.Wallet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Wallet">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DealsEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Addresses" EntityType="Self.Address" />
+    <EntitySet Name="Cards" EntityType="Self.Card" />
+    <EntitySet Name="Companies" EntityType="Self.Company" />
+    <EntitySet Name="Coupons" EntityType="Self.Coupon" />
+    <EntitySet Name="DealImages" EntityType="Self.DealImage" />
+    <EntitySet Name="Deals" EntityType="Self.Deal" />
+    <EntitySet Name="Stores" EntityType="Self.Store" />
+    <EntitySet Name="Subscriptions" EntityType="Self.Subscription" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="UserProfiles" EntityType="Self.UserProfile" />
+    <EntitySet Name="UserSubscritions" EntityType="Self.UserSubscrition" />
+    <EntitySet Name="Wallets" EntityType="Self.Wallet" />
+    <AssociationSet Name="FK_Store_Address" Association="Self.FK_Store_Address">
+      <End Role="Address" EntitySet="Addresses" />
+      <End Role="Store" EntitySet="Stores" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Card_UserProfile" Association="Self.FK_Card_UserProfile">
+      <End Role="UserProfile" EntitySet="UserProfiles" />
+      <End Role="Card" EntitySet="Cards" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Store_Company" Association="Self.FK_Store_Company">
+      <End Role="Company" EntitySet="Companies" />
+      <End Role="Store" EntitySet="Stores" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Coupon_Deals" Association="Self.FK_Coupon_Deals">
+      <End Role="Deals" EntitySet="Deals" />
+      <End Role="Coupon" EntitySet="Coupons" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Coupon_UserProfile" Association="Self.FK_Coupon_UserProfile">
+      <End Role="UserProfile" EntitySet="UserProfiles" />
+      <End Role="Coupon" EntitySet="Coupons" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DealImages_Deals" Association="Self.FK_DealImages_Deals">
+      <End Role="Deals" EntitySet="Deals" />
+      <End Role="DealImages" EntitySet="DealImages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Deals_Store" Association="Self.FK_Deals_Store">
+      <End Role="Store" EntitySet="Stores" />
+      <End Role="Deals" EntitySet="Deals" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Store_UserProfile" Association="Self.FK_Store_UserProfile">
+      <End Role="UserProfile" EntitySet="UserProfiles" />
+      <End Role="Store" EntitySet="Stores" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserProfile_Subscription" Association="Self.FK_UserProfile_Subscription">
+      <End Role="Subscription" EntitySet="Subscriptions" />
+      <End Role="UserProfile" EntitySet="UserProfiles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserSubscrition_UserProfile" Association="Self.FK_UserSubscrition_UserProfile">
+      <End Role="UserProfile" EntitySet="UserProfiles" />
+      <End Role="UserSubscrition" EntitySet="UserSubscritions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Wallet_UserProfile" Association="Self.FK_Wallet_UserProfile">
+      <End Role="UserProfile" EntitySet="UserProfiles" />
+      <End Role="Wallet" EntitySet="Wallets" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

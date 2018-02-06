@@ -11,7 +11,6 @@ using DealsNZ.Models.Repository.Interface;
 using DealsNZ.Repository.ClassServices;
 using DealsNZ.Repository.Interface;
 using static DealsNZ.Models.DealsModels;
-using PagedList;
 
 namespace DealsNZ.Controllers.UserController
 {
@@ -100,8 +99,7 @@ namespace DealsNZ.Controllers.UserController
                         ViewSingleDeal SingleDeal = dealServices.GetSingleDeal(CreateCoupon.DealId);
                         dealServices.Dispose();
                         ViewBag.Message = "Check Your Mail To Get Coupon";
-                        return RedirectToAction("Index", "Deal",new {id=SingleDeal.DealId });
-
+                        return View("Index", SingleDeal);
 
                     }
                 }
@@ -131,13 +129,13 @@ namespace DealsNZ.Controllers.UserController
 
         }
 
-        public ActionResult ShowCoupons(int? page)
+        public ActionResult ShowCoupons()
         {
             if (Session[KeyList.SessionKeys.UserID] != null)
             {
                 couponservice = new CouponService(new DealsDB());
                 var couponList = couponservice.ViewCoupons(Convert.ToInt32(Session[KeyList.SessionKeys.UserID]));
-                return View(couponList.ToPagedList(page ?? 1, 10));
+                return View(couponList);
             }
             return RedirectToAction("Index", "Register_Login");
         }
@@ -190,7 +188,7 @@ namespace DealsNZ.Controllers.UserController
             return body;
 
         }
-        
+
         public ActionResult InsertInWishList()
         {
             if (Session[KeyList.SessionKeys.UserID] == null)
@@ -199,13 +197,25 @@ namespace DealsNZ.Controllers.UserController
             }
             if (RouteData.Values["id"] != null)
             {
+
                 int DealID = Convert.ToInt32(RouteData.Values["id"].ToString());
+
                 WishList InsWishList = new WishList();
                 InsWishList.DealId = DealID;
                 InsWishList.UserId = Convert.ToInt32(Session[KeyList.SessionKeys.UserID].ToString());
                 InsWishList.AddedOn = System.DateTime.Now;
                 wishListService = new UserWishListService(new DealsDB());
-                wishListService.Insert(InsWishList);
+                if (wishListService.wishlistCheck(DealID, InsWishList.UserId) == true)
+                {
+                    wishListService.Insert(InsWishList);
+                    ViewBag.Message = "Added to WishList";
+
+                }
+                else
+                {
+                    ViewBag.Message = "Already Added";
+                }
+
                 wishListService.Dispose();
                 return RedirectToAction("Index", "Home");
             }
@@ -240,11 +250,12 @@ namespace DealsNZ.Controllers.UserController
                 wishListService.Dispose();
                 return View("ViewWishList");
             }
-            else {
+            else
+            {
                 return View("ViewWishList");
             }
-            
+
         }
     }
-    
+
 }

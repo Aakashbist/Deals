@@ -1,0 +1,322 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DealsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Address">
+    <Key>
+      <PropertyRef Name="AddressId" />
+    </Key>
+    <Property Name="AddressId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="City" Type="varchar" MaxLength="20" />
+    <Property Name="Country" Type="varchar" MaxLength="50" />
+    <Property Name="Street" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Card">
+    <Key>
+      <PropertyRef Name="CardId" />
+    </Key>
+    <Property Name="CardId" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="CardNumber" Type="varchar" MaxLength="20" />
+    <Property Name="CardExpiryMonth" Type="int" />
+    <Property Name="CardExpiryYear" Type="int" />
+    <Property Name="CardHolderName" Type="varchar" MaxLength="20" />
+    <Property Name="CardType" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Company">
+    <Key>
+      <PropertyRef Name="CompanyId" />
+    </Key>
+    <Property Name="CompanyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyName" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Coupon">
+    <Key>
+      <PropertyRef Name="CouponId" />
+    </Key>
+    <Property Name="CouponId" Type="int" Nullable="false" />
+    <Property Name="CouponUniqueText" Type="varchar" MaxLength="50" />
+    <Property Name="CouponValidTill" Type="date" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="DealId" Type="int" />
+    <Property Name="AddedOn" Type="date" />
+  </EntityType>
+  <EntityType Name="DealImages">
+    <Key>
+      <PropertyRef Name="DealImageId" />
+    </Key>
+    <Property Name="DealImageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DealImage" Type="varchar" MaxLength="500" />
+    <Property Name="DealImageDesc" Type="varchar" MaxLength="500" />
+    <Property Name="ImageTags" Type="varchar" MaxLength="500" />
+    <Property Name="DealId" Type="int" />
+  </EntityType>
+  <EntityType Name="Deals">
+    <Key>
+      <PropertyRef Name="DealId" />
+    </Key>
+    <Property Name="DealId" Type="int" Nullable="false" />
+    <Property Name="StoreId" Type="int" />
+    <Property Name="ValidTill" Type="date" />
+    <Property Name="Discount" Type="int" />
+    <Property Name="StrikePrice" Type="int" />
+    <Property Name="Price" Type="int" />
+    <Property Name="Title" Type="varchar" MaxLength="200" />
+    <Property Name="Description" Type="varchar" MaxLength="2000" />
+    <Property Name="AddedOn" Type="date" />
+  </EntityType>
+  <EntityType Name="Store">
+    <Key>
+      <PropertyRef Name="StoreId" />
+    </Key>
+    <Property Name="StoreId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StoreName" Type="varchar" MaxLength="50" />
+    <Property Name="StoreAddress" Type="int" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="Contact" Type="varchar" MaxLength="20" />
+    <Property Name="IdentificationImage" Type="varchar" MaxLength="500" />
+    <Property Name="CompanyId" Type="int" />
+  </EntityType>
+  <EntityType Name="Subscription">
+    <Key>
+      <PropertyRef Name="SubscriptionId" />
+    </Key>
+    <Property Name="SubscriptionId" Type="int" Nullable="false" />
+    <Property Name="SubscriptionTitle" Type="varchar" MaxLength="20" />
+    <Property Name="SubscriptionDiscription" Type="varbinary" MaxLength="500" />
+    <Property Name="SubscriptionPrice" Type="int" />
+    <Property Name="AddedOn" Type="date" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="UserProfile">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="30" />
+    <Property Name="Password" Type="varchar" MaxLength="500" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="Contact" Type="varchar" MaxLength="20" />
+    <Property Name="isContactVerified" Type="bit" />
+    <Property Name="isLocked" Type="bit" />
+    <Property Name="AddedOn" Type="date" />
+    <Property Name="UserSubscritionId" Type="int" />
+    <Property Name="UserPromoCode" Type="varchar" MaxLength="20" />
+    <Property Name="RefferedByUser" Type="int" />
+  </EntityType>
+  <EntityType Name="UserSubscrition">
+    <Key>
+      <PropertyRef Name="UserSubscriptionId" />
+    </Key>
+    <Property Name="UserSubscriptionId" Type="int" Nullable="false" />
+    <Property Name="UserSubscritionDate" Type="date" />
+    <Property Name="UserSubscritionRenewalDate" Type="date" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="SubscriptionId" Type="int" />
+  </EntityType>
+  <EntityType Name="Wallet">
+    <Key>
+      <PropertyRef Name="WalletId" />
+    </Key>
+    <Property Name="WalletId" Type="int" Nullable="false" />
+    <Property Name="WalletCredit" Type="int" />
+    <Property Name="UserId" Type="int" />
+  </EntityType>
+  <Association Name="FK_Card_UserProfile">
+    <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
+    <End Role="Card" Type="Self.Card" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Card">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Coupon_Deals">
+    <End Role="Deals" Type="Self.Deals" Multiplicity="0..1" />
+    <End Role="Coupon" Type="Self.Coupon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Deals">
+        <PropertyRef Name="DealId" />
+      </Principal>
+      <Dependent Role="Coupon">
+        <PropertyRef Name="DealId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Coupon_UserProfile">
+    <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
+    <End Role="Coupon" Type="Self.Coupon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Coupon">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DealImages_Deals">
+    <End Role="Deals" Type="Self.Deals" Multiplicity="0..1" />
+    <End Role="DealImages" Type="Self.DealImages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Deals">
+        <PropertyRef Name="DealId" />
+      </Principal>
+      <Dependent Role="DealImages">
+        <PropertyRef Name="DealId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Deals_Store">
+    <End Role="Store" Type="Self.Store" Multiplicity="0..1" />
+    <End Role="Deals" Type="Self.Deals" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Store">
+        <PropertyRef Name="StoreId" />
+      </Principal>
+      <Dependent Role="Deals">
+        <PropertyRef Name="StoreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Store_Address">
+    <End Role="Address" Type="Self.Address" Multiplicity="0..1" />
+    <End Role="Store" Type="Self.Store" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Address">
+        <PropertyRef Name="AddressId" />
+      </Principal>
+      <Dependent Role="Store">
+        <PropertyRef Name="StoreAddress" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Store_Company">
+    <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+    <End Role="Store" Type="Self.Store" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="Store">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Store_UserProfile">
+    <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
+    <End Role="Store" Type="Self.Store" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Store">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserProfile_Subscription">
+    <End Role="Subscription" Type="Self.Subscription" Multiplicity="0..1" />
+    <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subscription">
+        <PropertyRef Name="SubscriptionId" />
+      </Principal>
+      <Dependent Role="UserProfile">
+        <PropertyRef Name="UserSubscritionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserSubscrition_UserProfile">
+    <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
+    <End Role="UserSubscrition" Type="Self.UserSubscrition" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserSubscrition">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Wallet_UserProfile">
+    <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
+    <End Role="Wallet" Type="Self.Wallet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Wallet">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DealsModelStoreContainer">
+    <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Card" EntityType="Self.Card" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Coupon" EntityType="Self.Coupon" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DealImages" EntityType="Self.DealImages" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Deals" EntityType="Self.Deals" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Store" EntityType="Self.Store" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Subscription" EntityType="Self.Subscription" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserSubscrition" EntityType="Self.UserSubscrition" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Wallet" EntityType="Self.Wallet" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Card_UserProfile" Association="Self.FK_Card_UserProfile">
+      <End Role="UserProfile" EntitySet="UserProfile" />
+      <End Role="Card" EntitySet="Card" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Coupon_Deals" Association="Self.FK_Coupon_Deals">
+      <End Role="Deals" EntitySet="Deals" />
+      <End Role="Coupon" EntitySet="Coupon" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Coupon_UserProfile" Association="Self.FK_Coupon_UserProfile">
+      <End Role="UserProfile" EntitySet="UserProfile" />
+      <End Role="Coupon" EntitySet="Coupon" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DealImages_Deals" Association="Self.FK_DealImages_Deals">
+      <End Role="Deals" EntitySet="Deals" />
+      <End Role="DealImages" EntitySet="DealImages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Deals_Store" Association="Self.FK_Deals_Store">
+      <End Role="Store" EntitySet="Store" />
+      <End Role="Deals" EntitySet="Deals" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Store_Address" Association="Self.FK_Store_Address">
+      <End Role="Address" EntitySet="Address" />
+      <End Role="Store" EntitySet="Store" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Store_Company" Association="Self.FK_Store_Company">
+      <End Role="Company" EntitySet="Company" />
+      <End Role="Store" EntitySet="Store" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Store_UserProfile" Association="Self.FK_Store_UserProfile">
+      <End Role="UserProfile" EntitySet="UserProfile" />
+      <End Role="Store" EntitySet="Store" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserProfile_Subscription" Association="Self.FK_UserProfile_Subscription">
+      <End Role="Subscription" EntitySet="Subscription" />
+      <End Role="UserProfile" EntitySet="UserProfile" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserSubscrition_UserProfile" Association="Self.FK_UserSubscrition_UserProfile">
+      <End Role="UserProfile" EntitySet="UserProfile" />
+      <End Role="UserSubscrition" EntitySet="UserSubscrition" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Wallet_UserProfile" Association="Self.FK_Wallet_UserProfile">
+      <End Role="UserProfile" EntitySet="UserProfile" />
+      <End Role="Wallet" EntitySet="Wallet" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,520 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DealsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Address">
+    <Key>
+      <PropertyRef Name="AddressId" />
+    </Key>
+    <Property Name="AddressId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="City" Type="varchar" MaxLength="20" />
+    <Property Name="Country" Type="varchar" MaxLength="50" />
+    <Property Name="Street" Type="varchar" MaxLength="50" />
+    <Property Name="StoreId" Type="int" />
+  </EntityType>
+  <EntityType Name="Card">
+    <Key>
+      <PropertyRef Name="CardId" />
+    </Key>
+    <Property Name="CardId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="CardNumber" Type="varchar" MaxLength="20" />
+    <Property Name="CardExpiryMonth" Type="int" />
+    <Property Name="CardExpiryYear" Type="int" />
+    <Property Name="CardHolderName" Type="varchar" MaxLength="20" />
+    <Property Name="CardType" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Company">
+    <Key>
+      <PropertyRef Name="CompanyId" />
+    </Key>
+    <Property Name="CompanyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" />
+  </EntityType>
+  <EntityType Name="Coupon">
+    <Key>
+      <PropertyRef Name="CouponId" />
+    </Key>
+    <Property Name="CouponId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CouponUniqueText" Type="varchar" MaxLength="50" />
+    <Property Name="CouponValidTill" Type="date" />
+    <Property Name="CouponQty" Type="int" />
+    <Property Name="ReedemNo" Type="int" />
+    <Property Name="CouponPrice" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="DealId" Type="int" />
+    <Property Name="AddedOn" Type="date" />
+  </EntityType>
+  <EntityType Name="CustomerSupport">
+    <Key>
+      <PropertyRef Name="CustomerSupportID" />
+    </Key>
+    <Property Name="CustomerSupportID" Type="int" Nullable="false" />
+    <Property Name="CustomerEmail" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="CustomerIssueSubject" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="CustomerIssue" Type="varchar(max)" Nullable="false" />
+    <Property Name="IssueStage" Type="int" Nullable="false" />
+    <Property Name="AddedOn" Type="datetime" />
+    <Property Name="AdminResponse" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="Deal">
+    <Key>
+      <PropertyRef Name="DealId" />
+    </Key>
+    <Property Name="DealId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StoreId" Type="int" />
+    <Property Name="ValidTill" Type="datetime" />
+    <Property Name="Discount" Type="int" />
+    <Property Name="StrikePrice" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Title" Type="varchar" MaxLength="200" />
+    <Property Name="IsDealFree" Type="bit" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="2000" />
+    <Property Name="AddedOn" Type="datetime" />
+    <Property Name="IsDeleted" Type="bit" />
+  </EntityType>
+  <EntityType Name="DealImage">
+    <Key>
+      <PropertyRef Name="DealImageId" />
+    </Key>
+    <Property Name="DealImageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DealImage" Type="varchar" MaxLength="500" />
+    <Property Name="DealImageDesc" Type="varchar" MaxLength="500" />
+    <Property Name="ImageTags" Type="varchar" MaxLength="500" />
+    <Property Name="DealId" Type="int" />
+  </EntityType>
+  <EntityType Name="LogTracker">
+    <Key>
+      <PropertyRef Name="LogID" />
+    </Key>
+    <Property Name="LogID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="Message" Type="varchar(max)" />
+    <Property Name="AddedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Notification">
+    <Key>
+      <PropertyRef Name="NotificationId" />
+    </Key>
+    <Property Name="NotificationId" Type="int" Nullable="false" />
+    <Property Name="NotificationMessage" Type="varchar(max)" />
+    <Property Name="AddedOn" Type="datetime" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Store">
+    <Key>
+      <PropertyRef Name="StoreId" />
+    </Key>
+    <Property Name="StoreId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StoreName" Type="varchar" MaxLength="50" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="Contact" Type="varchar" MaxLength="20" />
+    <Property Name="IdentificationImage" Type="varchar" MaxLength="500" />
+    <Property Name="CompanyId" Type="int" />
+    <Property Name="IsValid" Type="bit" />
+    <Property Name="IsDeleted" Type="bit" />
+  </EntityType>
+  <EntityType Name="Subscription">
+    <Key>
+      <PropertyRef Name="SubscriptionId" />
+    </Key>
+    <Property Name="SubscriptionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SubscriptionTitle" Type="varchar" MaxLength="20" />
+    <Property Name="SubscriptionDiscription" Type="varchar(max)" />
+    <Property Name="SubscriptionPrice" Type="int" />
+    <Property Name="AddedOn" Type="date" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="UserProfile">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserType" Type="int" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Contact" Type="varchar" MaxLength="20" />
+    <Property Name="Street" Type="varchar" MaxLength="30" />
+    <Property Name="Suburb" Type="varchar" MaxLength="30" />
+    <Property Name="City" Type="varchar" MaxLength="30" />
+    <Property Name="Region" Type="varchar" MaxLength="30" />
+    <Property Name="Country" Type="varchar" MaxLength="30" />
+    <Property Name="PinCode" Type="int" />
+    <Property Name="isContactVerified" Type="bit" />
+    <Property Name="isLocked" Type="bit" />
+    <Property Name="AddedOn" Type="date" />
+    <Property Name="UserSubscritionId" Type="int" />
+    <Property Name="UserPromoCode" Type="varchar" MaxLength="20" />
+    <Property Name="RefferedByUser" Type="int" />
+  </EntityType>
+  <EntityType Name="UserSubscrition">
+    <Key>
+      <PropertyRef Name="UserSubscriptionId" />
+    </Key>
+    <Property Name="UserSubscriptionId" Type="int" Nullable="false" />
+    <Property Name="UserSubscritionDate" Type="date" />
+    <Property Name="UserSubscritionRenewalDate" Type="date" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="SubscriptionId" Type="int" />
+  </EntityType>
+  <EntityType Name="UserType">
+    <Key>
+      <PropertyRef Name="UserTypeId" />
+    </Key>
+    <Property Name="UserTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserTypeName" Type="varchar" MaxLength="15" />
+  </EntityType>
+  <EntityType Name="UserVerification">
+    <Key>
+      <PropertyRef Name="UserVerificationID" />
+    </Key>
+    <Property Name="UserVerificationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserVerificationCode" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Userid" Type="int" Nullable="false" />
+    <Property Name="Purpose" Type="varchar" MaxLength="20" />
+    <Property Name="AddedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Wallet">
+    <Key>
+      <PropertyRef Name="WalletId" />
+    </Key>
+    <Property Name="WalletId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WalletCredit" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="WalletCreditDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="WishList">
+    <Key>
+      <PropertyRef Name="WishlistID" />
+    </Key>
+    <Property Name="WishlistID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DealId" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="AddedOn" Type="datetime" />
+  </EntityType>
+  <Association Name="FK_Address_Store">
+    <End Role="Store" Type="Self.Store" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Address" Type="Self.Address" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Store">
+        <PropertyRef Name="StoreId" />
+      </Principal>
+      <Dependent Role="Address">
+        <PropertyRef Name="StoreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Card_UserProfile">
+    <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Card" Type="Self.Card" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Card">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Coupon_Deals">
+    <End Role="Deal" Type="Self.Deal" Multiplicity="0..1" />
+    <End Role="Coupon" Type="Self.Coupon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Deal">
+        <PropertyRef Name="DealId" />
+      </Principal>
+      <Dependent Role="Coupon">
+        <PropertyRef Name="DealId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Coupon_UserProfile">
+    <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Coupon" Type="Self.Coupon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Coupon">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DealImages_Deals">
+    <End Role="Deal" Type="Self.Deal" Multiplicity="0..1" />
+    <End Role="DealImage" Type="Self.DealImage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Deal">
+        <PropertyRef Name="DealId" />
+      </Principal>
+      <Dependent Role="DealImage">
+        <PropertyRef Name="DealId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Deals_Store">
+    <End Role="Store" Type="Self.Store" Multiplicity="0..1" />
+    <End Role="Deal" Type="Self.Deal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Store">
+        <PropertyRef Name="StoreId" />
+      </Principal>
+      <Dependent Role="Deal">
+        <PropertyRef Name="StoreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LogTracker_UserProfile">
+    <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="LogTracker" Type="Self.LogTracker" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="LogTracker">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Notification_UserProfile">
+    <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Notification" Type="Self.Notification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Notification">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Store_Company">
+    <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+    <End Role="Store" Type="Self.Store" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="Store">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Store_UserProfile">
+    <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Store" Type="Self.Store" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Store">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserProfile_Subscription">
+    <End Role="Subscription" Type="Self.Subscription" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subscription">
+        <PropertyRef Name="SubscriptionId" />
+      </Principal>
+      <Dependent Role="UserProfile">
+        <PropertyRef Name="UserSubscritionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserProfile_UserType">
+    <End Role="UserType" Type="Self.UserType" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserType">
+        <PropertyRef Name="UserTypeId" />
+      </Principal>
+      <Dependent Role="UserProfile">
+        <PropertyRef Name="UserType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserSubscrition_UserProfile">
+    <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UserSubscrition" Type="Self.UserSubscrition" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserSubscrition">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserVeryfication_UserProfile">
+    <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UserVerification" Type="Self.UserVerification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserVerification">
+        <PropertyRef Name="Userid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Wallet_UserProfile">
+    <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Wallet" Type="Self.Wallet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Wallet">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WishList_Deal1">
+    <End Role="Deal" Type="Self.Deal" Multiplicity="1" />
+    <End Role="WishList" Type="Self.WishList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Deal">
+        <PropertyRef Name="DealId" />
+      </Principal>
+      <Dependent Role="WishList">
+        <PropertyRef Name="DealId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WishList_UserProfile">
+    <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="WishList" Type="Self.WishList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="WishList">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DealsModelStoreContainer">
+    <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Card" EntityType="Self.Card" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Coupon" EntityType="Self.Coupon" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CustomerSupport" EntityType="Self.CustomerSupport" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Deal" EntityType="Self.Deal" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DealImage" EntityType="Self.DealImage" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LogTracker" EntityType="Self.LogTracker" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Notification" EntityType="Self.Notification" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Store" EntityType="Self.Store" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Subscription" EntityType="Self.Subscription" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserSubscrition" EntityType="Self.UserSubscrition" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserType" EntityType="Self.UserType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserVerification" EntityType="Self.UserVerification" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Wallet" EntityType="Self.Wallet" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WishList" EntityType="Self.WishList" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Address_Store" Association="Self.FK_Address_Store">
+      <End Role="Store" EntitySet="Store" />
+      <End Role="Address" EntitySet="Address" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Card_UserProfile" Association="Self.FK_Card_UserProfile">
+      <End Role="UserProfile" EntitySet="UserProfile" />
+      <End Role="Card" EntitySet="Card" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Coupon_Deals" Association="Self.FK_Coupon_Deals">
+      <End Role="Deal" EntitySet="Deal" />
+      <End Role="Coupon" EntitySet="Coupon" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Coupon_UserProfile" Association="Self.FK_Coupon_UserProfile">
+      <End Role="UserProfile" EntitySet="UserProfile" />
+      <End Role="Coupon" EntitySet="Coupon" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DealImages_Deals" Association="Self.FK_DealImages_Deals">
+      <End Role="Deal" EntitySet="Deal" />
+      <End Role="DealImage" EntitySet="DealImage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Deals_Store" Association="Self.FK_Deals_Store">
+      <End Role="Store" EntitySet="Store" />
+      <End Role="Deal" EntitySet="Deal" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LogTracker_UserProfile" Association="Self.FK_LogTracker_UserProfile">
+      <End Role="UserProfile" EntitySet="UserProfile" />
+      <End Role="LogTracker" EntitySet="LogTracker" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Notification_UserProfile" Association="Self.FK_Notification_UserProfile">
+      <End Role="UserProfile" EntitySet="UserProfile" />
+      <End Role="Notification" EntitySet="Notification" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Store_Company" Association="Self.FK_Store_Company">
+      <End Role="Company" EntitySet="Company" />
+      <End Role="Store" EntitySet="Store" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Store_UserProfile" Association="Self.FK_Store_UserProfile">
+      <End Role="UserProfile" EntitySet="UserProfile" />
+      <End Role="Store" EntitySet="Store" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserProfile_Subscription" Association="Self.FK_UserProfile_Subscription">
+      <End Role="Subscription" EntitySet="Subscription" />
+      <End Role="UserProfile" EntitySet="UserProfile" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserProfile_UserType" Association="Self.FK_UserProfile_UserType">
+      <End Role="UserType" EntitySet="UserType" />
+      <End Role="UserProfile" EntitySet="UserProfile" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserSubscrition_UserProfile" Association="Self.FK_UserSubscrition_UserProfile">
+      <End Role="UserProfile" EntitySet="UserProfile" />
+      <End Role="UserSubscrition" EntitySet="UserSubscrition" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserVeryfication_UserProfile" Association="Self.FK_UserVeryfication_UserProfile">
+      <End Role="UserProfile" EntitySet="UserProfile" />
+      <End Role="UserVerification" EntitySet="UserVerification" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Wallet_UserProfile" Association="Self.FK_Wallet_UserProfile">
+      <End Role="UserProfile" EntitySet="UserProfile" />
+      <End Role="Wallet" EntitySet="Wallet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WishList_Deal1" Association="Self.FK_WishList_Deal1">
+      <End Role="Deal" EntitySet="Deal" />
+      <End Role="WishList" EntitySet="WishList" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WishList_UserProfile" Association="Self.FK_WishList_UserProfile">
+      <End Role="UserProfile" EntitySet="UserProfile" />
+      <End Role="WishList" EntitySet="WishList" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
