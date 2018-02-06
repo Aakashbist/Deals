@@ -1,0 +1,73 @@
+﻿@model DealsNZ.Models.Deal
+
+@{
+    ViewBag.Title = "DeleteDeal";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+
+    <div class="row">
+        <div class="col m8 s12 offset-l2 center">
+            <div class="card grey lighten-4">
+                <div class="card-content black-text">
+                    <div>
+                        <h5>Delete</h5>
+                        <h6>Do you want to continue ? </h6>
+                        <hr />
+                        <div>
+                            <div>
+                                <div class="col m6">
+                                    @Html.DisplayNameFor(model =>model.Title)
+                                </div>
+
+                                <div>
+                                    @Html.DisplayFor(model => model.Title)
+                                </div>
+                            </div>
+                            <div>
+                                <div class="col m6">
+                                    @Html.DisplayNameFor(model => model.Discount)
+                                </div>
+
+                                <div>
+                                    @Html.DisplayFor(model => model.Discount)
+                                </div>
+                            </div>
+                            <div>
+                                <div class="col m6">
+                                    @Html.DisplayNameFor(model => model.Price)
+                                </div>
+
+                                <div>
+                                    @Html.DisplayFor(model => model.Price)
+                                </div>
+                            </div>
+                            <div>
+                                <div class="col m6">
+                                    @Html.DisplayNameFor(model => model.DealImages)
+                                </div>
+
+                                <div>
+                                    <img src="@Url.Content(Model.DealImages.FirstOrDefault().DealImage1)" style="width:80px" />
+                                  
+                                </div>
+                            </div>
+                                                     <br />
+
+
+                            @using (Html.BeginForm())
+                            {
+                                @Html.AntiForgeryToken()
+
+                                <div class="form-actions no-color">
+                                    <input type="submit" value="ok" class="btn-floating btn red darken-2" /> |
+                                    @Html.ActionLink("Back to List", "Deal", new { @class = "btn-floating btn red darken-2" })
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

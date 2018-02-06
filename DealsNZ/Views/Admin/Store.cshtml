@@ -1,0 +1,124 @@
+﻿
+@using PagedList;
+@using PagedList.Mvc;
+
+@model IPagedList<DealsNZ.Models.Store>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="row">
+    <div class="col s12 ">
+        <div class="card grey lighten-4">
+
+            <div class="card-content black-text">
+                <div>
+                    <div>
+
+                        <span class="card-title" style="display:inline ">Stores</span>
+                        <span class="right">
+
+                            @using (@Html.BeginForm("Store", "Admin", FormMethod.Get))
+                            {
+
+                                <div class="file-field input-field" style="margin-top: 0px;">
+                                    <button class="btn" type="submit">
+                                        <span><i class="material-icons">search</i></span>
+                                    </button>
+                                    <div class="file-path-wrapper">
+                                        <div style="max-width:400px;">@Html.TextBox("search") </div>
+                                    </div>
+                                </div>
+                            }
+                        </span>
+                    </div>
+
+                    <table class="responsive-table highlight accent-3">
+
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.First().StoreName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.First().UserId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.First().Contact)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.First().IdentificationImage)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.First().Company)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.First().IsValid)
+                            </th>
+                            <th>Actions</th>
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.StoreName)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UserId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Contact)
+                                </td>
+                                <td>
+                                    <img src="@Url.Content(item.IdentificationImage)" style="width:80px" />
+
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Company.CompanyName)
+                                </td>
+                                <td>
+                                    @if (item.IsValid == false)
+                                    {
+                                        <a class="btn-floating btn red" href='@Url.Action("Validate", "Admin", new { id = item.StoreId}, null)'><i class="material-icons small">lock_outline</i></a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn-floating btn green" href='@Url.Action("Validate", "Admin", new { id = item.StoreId}, null)'><i class="material-icons ">lock_open</i></a>//   @Html.ActionLink("Deactivate", "Validate", new { id = item.StoreId })
+                                    }
+                                </td>
+                                <td>
+                                    <a class="btn-floating btn blue" href='@Url.Action("EditStore", "Admin", new { id = item.StoreId}, null)'><i class="material-icons">edit</i></a>
+                                    @if (item.IsDeleted == false)
+                                    {
+                                        <a class="btn-floating btn red" href='@Url.Action("DeleteStore", "Admin", new { id = item.StoreId}, null)'><i class="material-icons">delete</i></a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn-floating btn red" href='@Url.Action("DeleteStore", "Admin", new { id = item.StoreId}, null)'><i class="material-icons">delete_forever</i></a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+
+            </div>
+            <div class="card-action">
+                <a class="waves-effect waves-light btn blue" data-position="top" data-delay="50" data-tooltip="Add Store" href='@Url.Action("CreateStore","Admin")'>Add Store<i class="material-icons left">add</i></a>
+            </div>
+            <div>
+                @Html.PagedListPager(Model, page => Url.Action("Store", new { page, @class = "teal-text" }))
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('.tooltipped').tooltip({ delay: 50 });
+        });
+    </script>
+}  

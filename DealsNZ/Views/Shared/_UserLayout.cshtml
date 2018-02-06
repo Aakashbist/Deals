@@ -1,0 +1,232 @@
+﻿@using DealsNZ.Helpers
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewBag.Title DealsNZ</title>
+    <link href="https://fonts.googleapis.com/css?family=Lobster+Two|Merienda+One|Material+Icons" rel="stylesheet">
+    @Styles.Render("~/bundles/materializecss")
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+
+
+</head>
+<body class="blue-grey lighten-5">
+    <nav class="darken-3 grey" role="navigation">
+        <div class="nav-wrapper">
+            <a href="#" data-activates="slide-out" class="button-collapse left white-text show-on-large"><i class="material-icons">menu</i></a>
+            <a id="logo-container" href="@Url.Action("Index", "Home")" class="brand-logo white-text"> DealsNZ</a>
+
+
+            <ul class="right">
+                @{ if (Session[DealsNZ.Helpers.KeyList.SessionKeys.UserID] != null)
+                    {
+                <ul class="right hide-on-med-and-down">
+                    <li><span><a href=@Url.Action("Index","Wallet")>$ @Session[KeyList.SessionKeys.WalletCredit].ToString()</a></span></li>
+                </ul>
+                    } }
+                @*<li><span class="red accent-3 white-text" style="font-size:10px;margin-left:-22px;border-radius:30px;padding-left:6px;padding-right:6px;padding-top:3px;padding-bottom:3px;">33</span></li>*@
+
+                <ul class="right hide-on-med-and-down">
+                    <li><span><a href="/Register_Login"><i class="material-icons white-text">account_circle</i></a></span></li>
+                </ul>
+                <ul class="right hide-on-med-and-down"></ul>
+                <ul class="right hide-on-med-and-down">
+                    <li><span><a href="@Url.Action("Index","Home")"><i class="material-icons white-text">home</i></a></span></li>
+                    <li><span><a href="#" class="text-darken-4"><i class="show-search-bar material-icons white-text">search</i></a></span></li>
+                </ul>
+            </ul>
+        </div>
+    </nav>
+    <nav id="search-bar" class="blue-grey lighten-5">
+        <div class="nav-wrapper white">
+            <form>
+                <div class="input-field">
+                    <input id="search" type="search" class="teal-text" required>
+                    <label class="label-icon" for="search"><i class="material-icons teal-text">search</i></label>
+                    <i id="close-search-bar" class="material-icons teal-text">close</i>
+                </div>
+            </form>
+        </div>
+    </nav>
+
+
+    <div id="slide-out" class="side-nav blue-grey lighten-5">
+
+        <ul>
+            @{ if (Session[DealsNZ.Helpers.KeyList.SessionKeys.UserID] == null)
+                {
+                    <li class="hide-on-large-only teal-text">
+                        <a href=@Url.Action("Index", "Register_Login")>
+                            <i class="material-icons">account_box</i>
+                            Login
+                        </a>
+                    </li>
+
+                }
+                else
+                {
+                    <li class="hide-on-large-only"><a href=@Url.Action("Index", "Wallet")><i class="material-icons teal-text">account_balance_wallet</i>$ @Session[KeyList.SessionKeys.WalletCredit].ToString()</a></li>
+                }
+            }
+
+
+            <li class="hide-on-large-only"><a class="show-search-bar" href="#"><i class="material-icons">search</i>Search</a></li>
+            <li><a href="/AllDeals"><i class="material-icons">local_offer</i> All Deals </a></li>
+            <li><div class="divider"></div></li>
+            <li><a href="#!">Featured</a></li>
+            <li><a href="#!"><i class="material-icons amber-text">whatshot</i>Hot Deals</a></li>
+            <li><a href="#!"><i class="material-icons red-text accent-3">loyalty</i>New Deals</a></li>
+            <li><div class="divider"></div></li>
+            <li><a href="#!">Quick Search</a></li>
+            <li><a href="#!"><i class="material-icons">restaurant</i>Food</a></li>
+            <li><a href="#!"><i class="material-icons">accessibility</i>Clothings</a></li>
+            <li><a href=@Url.Action("ShowCoupons", "Deal")><i class="material-icons">confirmation_number</i>Coupons</a></li>
+        </ul>
+
+        <ul class="picker__list">
+            @{
+                if (Session["UserEmail"] != null && Session["UserType"] != null)
+
+
+                //if (Request.IsAuthenticated)
+                {
+
+                    <li class="picker__list-item">
+                        <a href=@Url.Action("MyProfile","Register_Login") class="waves-effect waves-lightmodal-trigger"><i class="material-icons teal-text">lock_outline</i><i style="font:8px;" class="materialize-teal-text">@Session[KeyList.SessionKeys.UserEmail].ToString();</i></a>
+
+
+                    </li>
+            
+                    <li class="picker__list-item"><a href="/Register_Login/LoggedOut"><i class="material-icons">exit_to_app</i>Logout</a></li>
+
+                }
+            }
+        </ul>
+
+    </div>
+    @*<div id="mod" class="modal">
+            <div class="modal-content">
+                @{Html.RenderPartial("ChangePassword", new DealsNZ.Models.AccountModels.ChangePassword());}
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+            </div>
+        </div>*@
+
+
+    <div class="container body-content" style="width:80% ;padding-bottom:60px;">
+        @RenderBody()
+    </div>
+
+    <footer style="bottom:0;position:fixed;z-index:-3" class="page-footer footer-copyright grey lighten-1 teal-text">
+
+        <div class="container">
+            <h6 class="left-align"><b>Developed by Parth and Ranjit</b><b class="right-align"> @System.DateTime.Now.Year</b></h6>
+        </div>
+
+    </footer>
+
+
+    <!--  Scripts-->
+    @Scripts.Render("~/bundles/jquery")
+
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    @* <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>*@
+
+
+    @Scripts.Render("~/bundles/materializejs")
+
+    @RenderSection("scripts", required: false)
+
+
+    <script>
+
+        $(function () {
+            $('.button-collapse').sideNav({
+                menuWidth: 260, // Default is 300
+                edge: 'left', // Choose the horizontal origin
+                closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+                draggable: true, // Choose whether you can drag to open on touch screens,
+                onOpen: function (el) { }, // A function to be called when sideNav is opened
+                onClose: function (el) { }, // A function to be called when sideNav is closed
+            });
+
+            $("#search-bar").hide();
+
+            $("#close-search-bar").click(function () {
+                $("#search-bar").toggle(500);
+            });
+
+            $(".show-search-bar").click(function (event) {
+                $("#search-bar").toggle(500);
+            });
+        });
+
+        $(document).ready(function () {
+
+            // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+            $('.modal').modal();
+
+            $('.pushpin-demo-nav').each(function () {
+                var $this = $(this);
+                var $target = $('#' + $(this).attr('data-target'));
+                $this.pushpin({
+                    top: $target.offset().top,
+                    bottom: $target.offset().top + $target.outerHeight() - $this.height()
+                });
+            });
+
+            $('.target').pushpin({
+                top: 0,
+                bottom: 1000,
+                offset: 0
+            });
+
+            $('.tabs-wrapper .row').pushpin('remove');
+
+
+
+            $("#Cqty").change(function () {
+
+                debugger;
+                a = $("#Cqty").val();
+                b = $("#strikePrice").val();
+                c = (a * b);
+                $("#Cprice").text(c);
+                $("#HiddenCouponPrice").val(c);
+            });
+
+        });
+
+
+
+        $(document).ready(function () {
+            $('.carousel').carousel();
+
+            $('.carousel.carousel-slider').carousel({ fullWidth: true });
+
+            $('.slider').slider();
+
+            // Pause slider
+            $('.slider').slider('pause');
+            // Start slider
+            $('.slider').slider('start');
+            // Next slide
+            $('.slider').slider('next');
+            // Previous slide
+            $('.slider').slider('prev');
+
+        });
+
+    </script>
+
+
+
+</body>
+</html>
